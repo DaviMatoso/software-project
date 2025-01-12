@@ -12,6 +12,7 @@ class ExampleAgent(BaseAgent):
         target_velocity, target_angle_velocity = Navigation.goToPoint(self.robot, self.targets[0])
         self.set_vel(target_velocity)
         self.set_angle_vel(target_angle_velocity)
+        self.angle_vel += 10
 
         return
 
