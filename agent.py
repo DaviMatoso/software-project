@@ -7,12 +7,13 @@ class ExampleAgent(BaseAgent):
     def __init__(self, id=0, yellow=False):
         super().__init__(id, yellow)
         self.mycount = 1
-        self.qlqrcoisa = 50
+        self.qlqrcoisa = 200
+        self.oppAhead = False
 
     def decision(self):
         if len(self.targets) == 0:
             return
-
+        
         # if self.mycount > 1:
         #     return
         # print(self.opponents)
@@ -23,24 +24,28 @@ class ExampleAgent(BaseAgent):
 
         if self.qlqrcoisa == 0:
             target_velocity, target_angle_velocity = Navigation.goToPoint(self.robot, self.targets[0])
-            new_angle_vel = target_angle_velocity + 8 
-            anguloX = target_velocity.x * math.sin(Navigation.degrees_to_radians(self.body_angle))
-            anguloY = target_velocity.x * math.cos(Navigation.degrees_to_radians(self.body_angle))
+            # new_angle_vel = target_angle_velocity  + 1
+            # anguloX = target_velocity.x * math.sin(Navigation.degrees_to_radians(self.body_angle))
+            # anguloY = target_velocity.y * math.cos(Navigation.degrees_to_radians(self.body_angle))
             
-            angle = Point(anguloX, anguloY)
-            print("///////////////////////")
-            print(self.body_angle)
-            print(new_angle_vel)
-            print(target_angle_velocity)
-            print(angle)
-            self.set_angle_vel(new_angle_vel)
-            self.set_vel(angle)
+            # angle = Point(-anguloX, -anguloY)
+            # print("///////////////////////")
+            # print(self.body_angle)
+            # print(new_angle_vel)
+            # print(target_angle_velocity)
+            # print(angle)
+            self.set_angle_vel(target_angle_velocity)
+            self.set_vel(target_velocity)
         else:
-            myVelocidade = Point(0.8643012686810787, 0.8532089532712336)
+            my_point = Point(1.0, 1.0)
+            myVelocidade, myAngle = Navigation.goToPoint(self.robot, my_point)
             self.set_vel(myVelocidade)
+            self.set_angle_vel(myAngle)
             self.qlqrcoisa -= 1
             print(self.qlqrcoisa)
         # print("////////////////////")
+            print(f"rodou {self.qlqrcoisa} vez")
+        
         # print(target_angle_velocity)
         # print(target_velocity)
         
@@ -56,7 +61,7 @@ class ExampleAgent(BaseAgent):
         # print("///////////////////////////////////")
         # print(" ")
         # print("///////////////////////////////////")
-        # print(self.opponents)
+        
         # print("ANGLE VELOCITY:")
         # print(self.angle_vel)
         # print('SELF.ROBOT:')
@@ -68,4 +73,11 @@ class ExampleAgent(BaseAgent):
         return
 
     def post_decision(self):
-        pass
+        for i in range(0, 21):
+            roboAtual = self.opponents.get(i)
+            roboAtual_X = roboAtual.x
+            roboAtual_Y = roboAtual.y
+            self.pos.x
+        
+            print(roboAtual.x)
+            
