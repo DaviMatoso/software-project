@@ -16,4 +16,15 @@ class ExampleAgent(BaseAgent):
         return
 
     def post_decision(self):
-        pass
+        for robo_id, roboAtual in self.opponents.items():
+            roboAtual_X = roboAtual.x
+            roboAtual_Y = roboAtual.y
+            my_loc = self.pos
+            opponent_loc = (roboAtual_X, roboAtual_Y)
+
+            new_opp_loc = Navigation.New_point(opponent_loc, my_loc, self.body_angle)
+
+            if new_opp_loc[0, 0] > my_loc[0] and new_opp_loc[0, 0] < (my_loc[0] + 2):
+                if new_opp_loc[1, 0] > (my_loc[0] + 0.45) and new_opp_loc[1, 0] < (my_loc[1] - 0.45):
+                    self.oppAhead = True
+                    
