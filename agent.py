@@ -4,6 +4,7 @@ from utils.ssl.base_agent import BaseAgent
 class ExampleAgent(BaseAgent):
     def __init__(self, id=0, yellow=False):
         super().__init__(id, yellow)
+        self.oppAhead = False
 
     def decision(self):
         if len(self.targets) == 0:
