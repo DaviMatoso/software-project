@@ -69,3 +69,26 @@ class Navigation:
       return target_velocity, -kp * d_theta
     else:
       return Point(0.0, 0.0), -kp * d_theta
+    
+  @staticmethod
+  def Rotate(x, y, ang):
+    rad_ang = math.radians(ang)
+    ang_sin = math.sin(rad_ang)
+    ang_cos = math.cos(rad_ang)
+
+    matrix1 = np.array([[x], [y]])
+    matrix2 = np.array([[ang_cos, -ang_sin],
+                        [ang_sin, ang_cos]])
+
+    product = matrix1 * matrix2
+    new_x = np.array([[product[0][0]], [product[1][0]]])
+    new_y = np.array([[product[0][1]], [product[1][1]]])
+   
+    return new_x + new_y
+  
+  @staticmethod
+  def New_point(point1, point2, angle):
+    rel_X = point1[0] - point2[0]
+    rel_Y = point1[1] - point2[1]
+
+    return Navigation.Rotate(rel_X, rel_Y, angle)
